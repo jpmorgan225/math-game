@@ -1,128 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multiplication</title>
-  <link rel="stylesheet" href="exo3.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="jeu.css">
 </head>
 <body>
+    <div class="contener">
 
-<div id="accueil">
-  <h1>Bienvenue dans le jeu</h1>
-  <p>Règles du jeu :</p>
-  <ul>
-    <li>Vous devez résoudre des additions dans un temps limité.</li>
-    <li>Chaque bonne réponse vous fait gagner 5 points.</li>
-    <li>Atteignez 50 points pour passer au niveau suivant.</li>
-    <li>Si le temps expire, vous perdez du temps.</li>
-  </ul>
-  <button id="startButton">Commencer</button>
+    <div class="get">
+<p class="primer">5</p>
+<p>+</p>
+<p class="second">7</p>
+<p>=</p>
+<input type="number">
 </div>
 
-<div id="jeu" class="hidden">
-  <div class="container">
-    <p class="first">5</p>
-    <p>+</p>
-    <p class="second">6</p>
-    <p>=</p>
-    <input type="number" placeholder=".">
-    <p class="score">Score: 0</p>
-    <p class="niveau">Niveau: 1</p>
-    <p class="chrono">0</p>
-  </div>
-</div>
+     <p class="scor">SCORE: 0points</p>
+     <p class="dd"></p>
+     <p class="temp">temps</p>
 
-<script>const n1 = document.querySelector("p.first");
-  const n2 = document.querySelector("p.second");
-  const input = document.querySelector("input");
-  const startButton = document.getElementById("startButton");
-  const accueil = document.getElementById("accueil");
-  const jeu = document.getElementById("jeu");
-  
-  let result = 0;
-  let scoreValue = 0;
-  let currentLevel = 1;
-  let inter;
-  
-  const levels = {
-    1: { min: 0, max: 9, time: 7 },
-    2: { min: 5, max: 20, time: 5 },
-    3: { min: 7, max: 22, time: 10 },
-    4: { min: 9, max: 25, time: 20 },
-    5: { min: 10, max: 26, time: 25 }
-  };
-  
-  let level = levels[currentLevel];
-  
-  const randomNumber = (max, min = 0) => Math.floor((Math.random() * (max - min)) + min);
-  
-  const update = () => {
-    let num1 = randomNumber(level.max, level.min);
-    let num2 = randomNumber(level.max, level.min);
-    result = num1 + num2;
-    n1.textContent = num1;
-    n2.textContent = num2;
-    document.querySelector('.score').textContent = `Score: ${scoreValue} points`;
-  };
-  
-  startButton.addEventListener("click", () => {
-    accueil.style.display = "none";
-    jeu.style.display = "flex";
-    update();
-    chrono();
-  });
-  
-  input.addEventListener("keyup", (e) => {
-    const value = parseInt(e.target.value);
-    
-    if (value === result) {
+    </div>
+    <!-- <div  class="proo"> -->
+    <div class="regle">
+        <div class="ref"> <h1>RÈGLES  DU  JEU <br>DE  <br> CALCUL  RAPIDE <br></h1>
+
+           <h3> Objectif du jeu :</h3>
+              Le but du jeu est de répondre correctement à un maximum <br> de questions de calcul dans un temps imparti.  <br> <br>
+         <h3> Déroulement du jeu : </h3> 
+           Une question de calcul apparaît à l'écran (exemple : 7 + 5 = ?). <br>
+           L'utilisateur doit entrer la bonne réponse avant que le temps imparti ne s'écoule. <br>
+           Après chaque réponse (correcte ou incorrecte), un nouveau calcul <br>
+           <h3> Système de points : </h3>
+            Bonne réponse dans le temps imparti → **+5 point <br>
+           Mauvaise réponse ou absence de réponse → **-5 point  <br>
+           
+           <h3>  Gestion du temps : </h3>
+           Chaque question doit être résolue en X secondes déterminer <br>
+           Si le temps est écoulé avant que l'utilisateur ne réponde : <br>
+           Si il  a au moins 5 points ,l'on lui retire 5 points .
+           Si il  a moins de 5 points , **il perd la partie immédiatement. 
+             Fin du jeu :  <br>
+           La partie s'arrête lorsqu'il n'a plus assez de points pour avancer  <br>  <br>
+            <button class="submit" >commencer</button>
+        </div>
+    </div>
+<!-- </div> -->
+    <script >
+      const levels ={
+  1:{min:0, max:10, time:5},
+  2:{min:20, max:50, time:10},
+  3:{min:375, max:600, time:15},
+  4:{min:750, max:900, time:15},
+  5:{min:300, max:1000, time:15},
+}
+
+
+let inter;
+let currentLevel = 1
+let level = levels[currentLevel];
+
+const button = document.querySelector('button.submit');
+const time =document.querySelector('time');
+let read = document.querySelector('button.read');
+
+const dd =document.querySelector('p.dd');
+const n1 = document.querySelector('p.primer');
+const n2 = document.querySelector('p.second');
+const input = document.querySelector('input');
+let result = 0
+let scor = document.querySelector('p.scor');
+let rest = 0;
+
+
+
+const randomnumber = (max,min=0)=>{
+  return Math.floor(Math.random()*(max-min)+min);                                                                                
+};
+
+
+const update = ()=>{
+  let num1 = randomnumber(level.max, level.min);
+  let num2 = randomnumber(level.max, level.min);
+  result = num1 + num2;
+  n1.textContent =num1 ;
+  n2.textContent = num2;
+  scor.textContent =`SCORE: ${rest} points`
+  dd.textContent = `niveau ${currentLevel}`;
+}
+
+
+
+let  chrono = ()=> {
+  let count = level.time;
+  inter = setInterval(()=>{
+      document.querySelector('p.temp').textContent = count;
+      if (count==0) {
+          clearInterval(inter);
+          if(rest==0){
+              alert('vous avez perdu !');
+              location.reload();
+          }else{
+              rest -=5;
+              update();
+              chrono();
+          }
+      }
+      count-=1;
+      
+  },1000);
+}
+
+
+// update();
+// chrono();
+
+
+input.addEventListener('keyup',(e)=>{
+  const value =e.target.value;
+  console.log(value);
+  if(parseInt(value)==result){
       clearInterval(inter);
       e.target.value = "";
-      scoreValue += 5;
-      
-      if (scoreValue >= 50) {
-        currentLevel += 1;
-        
-        if (currentLevel > 5) {
-          alert("Vous avez terminé le jeu !");
-          currentLevel = 1;
-          scoreValue = 0;
-        }
-  
-        level = levels[currentLevel];
-        document.querySelector('.niveau').textContent = `Niveau: ${currentLevel}`;
-        scoreValue = 0;
+      rest +=5;
+      if(rest==15){
+          if(currentLevel==5 ){
+              alert('Bravo vous avez terminé le jeu!');
+              location.reload();
+          }else{
+              currentLevel+=1;
+              level = levels[currentLevel];
+              rest=0;
+              update();
+              chrono();
+          }
+      }else{
+          update();
+          chrono();
       }
-  
-      update();
-      chrono();
-    }
-  });
-  
-  let chrono = () => {
-    let count = level.time;
-    document.querySelector(".chrono").textContent = count;
-  
-    inter = setInterval(() => {
-      count--;
-      document.querySelector(".chrono").textContent = count;
-  
-      if (count <= 0) {
-        clearInterval(inter);
-        
-        if (scoreValue === 0) {
-          alert("Vous avez perdu !");
-          scoreValue = 0;
-        } else {
-          scoreValue -= 5;
-        }
-  
-        update();
-        chrono();
-      }
-    }, 1000);
-  };
-  </script>
+  }
+
+});
+
+
+
+button.addEventListener('click',(e)=>{
+  e.target.parentElement.parentElement.style.display = 'none';
+  update();
+  chrono();
+
+});
+    </script>
 </body>
 </html>
